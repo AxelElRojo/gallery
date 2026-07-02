@@ -34,4 +34,4 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete -e "ssh -p 69 -i ~/.ssh/deploy_key" public/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/yourdomain.com/
+          rsync -avz --delete -e "ssh -p 69 -i ~/.ssh/deploy_key" public/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_NAME }}:/var/www/gallery/
