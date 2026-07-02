@@ -1,0 +1,38 @@
+{{ define "main" }}
+  <header style="margin-bottom: 2rem;">
+    <h1>Gallery</h1>
+    <p>My pictures.</p>
+  </header>
+
+  <div class="roll-list">
+    {{ range site.RegularPages }}
+      {{ if and (ne .Type "blog") (ne .Type "page") }}
+        <a href="{{ .RelPermalink }}" class="gallery-card">
+          
+          {{ $coverImage := "" }}
+
+          {{ if .Params.thumbnail }}
+            {{ $coverImage = .Resources.GetMatch .Params.thumbnail }}
+          {{ end }}
+
+          {{ if not $coverImage }}
+            {{ $coverImage = index (.Resources.ByType "image") 0 }}
+          {{ end }}          
+          <div class="gallery-card-content">
+            <h2>{{ .Title }}</h2>
+            <p>
+              {{ with .Params.location }}{{ . }} | {{ end }}
+              {{ with .Params.stock }}{{ . }}{{ end }}
+            </p>
+          </div>
+          {{ if $coverImage }}
+            {{ $thumb := $coverImage.Fill "600x400 center" }}
+            <div class="gallery-card-image">
+              <img src="{{ $thumb.RelPermalink }}" width="25%" alt="{{ .Title }}" loading="lazy">
+            </div>
+          {{ end }}
+        </a>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}

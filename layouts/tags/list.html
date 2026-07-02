@@ -1,0 +1,27 @@
+{{ define "main" }}
+  <header style="margin-bottom: 2rem;">
+    <h1>List of all tags</h1>
+  </header>
+
+  <div class="tag-cloud">
+    {{ range .Data.Terms.Alphabetical }}
+      {{ $currentTag := .Page.Data.Term }}
+      
+      {{ $imageCount := 0 }}
+
+      {{ range site.RegularPages }}
+        {{ range .Resources.ByType "image" }}
+          {{ range .Params.tags }}
+            {{ if eq (urlize .) $currentTag }}
+              {{ $imageCount = add $imageCount 1 }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+
+      <a href="{{ .Page.RelPermalink }}" class="tag-pill">
+        #{{ lower .Page.Title }} <span class="tag-count">{{ $imageCount }}</span>
+      </a>
+    {{ end }}
+  </div>
+{{ end }}

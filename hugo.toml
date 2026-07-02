@@ -1,0 +1,12 @@
+baseURL = 'https://gallery.projectrojo.net'
+languageCode = 'en-us'
+title = "ROJO's Gallery"
+
+[taxonomies]
+  tag = 'tags'
+  lens = 'lenses'
+  film_stock = 'film_stocks'
+  film_format = 'film_formats'
+  location = 'locations'
+
+[params]

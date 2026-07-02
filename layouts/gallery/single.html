@@ -1,0 +1,69 @@
+{{ define "main" }}
+  <header style="margin-bottom: 2rem;">
+    <h1>{{ .Title }}</h1>
+    <p>
+      Location: {{ .Params.location }}
+      <br/>
+      Film: {{ .Params.stock }}
+      <br/>
+      Camera: {{ .Params.camera }}
+    </p>
+  </header>
+{{ if .Content }}
+    <div class="album-description">
+      {{ .Content }}
+    </div>
+{{ end }}
+<div class="contact-sheet" id="my-gallery">
+  {{ range .Resources.ByType "image" }}
+    {{ if ne .Params.publish false }}
+
+    {{ $tags := .Params.tags }}
+    {{ $comment := .Params.comment }}
+    {{ $orientation := .Params.orientation }}
+    {{ $rotate := .Params.rotate }}
+    {{ $featured := .Params.featured }}
+
+    {{ $img := . }}
+    {{ $img = $img.Filter (images.AutoOrient) }}
+    {{ if $rotate }}
+      {{ $img = $img.Filter (images.Rotate $rotate) }}
+    {{ end }}
+
+    {{ $pswpWidth := $img.Width }}
+    {{ $pswpHeight := $img.Height }}
+
+    {{ $wrapperClass := "photo-wrapper" }}
+    {{ $cropSize := "400x400" }}
+
+    {{ if eq $orientation "portrait" }}
+      {{ $wrapperClass = printf "%s is-portrait" $wrapperClass }}
+      {{ if $featured }}
+        {{ $cropSize = "800x1200" }} 
+      {{ else }}
+        {{ $cropSize = "400x600" }} 
+      {{ end }}
+    {{ else }}
+      {{ if $featured }}
+        {{ $cropSize = "800x800" }} 
+      {{ end }}
+    {{ end }}
+
+    {{ $thumb := $img.Fit $cropSize }}
+
+    <a href="{{ $img.RelPermalink }}" 
+      data-pswp-width="{{ $pswpWidth }}" 
+      data-pswp-height="{{ $pswpHeight }}"
+      data-tags="{{ with $tags }}{{ delimit . ", " }}{{ end }}"
+      data-comment="{{ $comment }}" 
+      class="{{ $wrapperClass }}">
+      <img src="{{ $thumb.RelPermalink }}" alt="{{ $comment | default "Gallery image" }}" loading="lazy" />
+    </a>
+    
+    {{ end }}
+  {{ end }}
+</div>
+  <div class="blog-footer">
+      <a href="/gallery/" class="back-link">&larr; Back to gallery</a>
+  </div>
+{{ end }}

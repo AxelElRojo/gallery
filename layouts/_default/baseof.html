@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+    {{ $style := resources.Get "css/main.css" | minify | fingerprint }}
+    {{ if $style }}
+      <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    {{ end }}
+    <link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/photoswipe.css">
+    {{ $script := resources.Get "js/main.js" | minify | fingerprint }}
+    {{ if $script }}
+      <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" type="module"></script>
+    {{ end }}
+</head>
+<body>
+    <body>
+      {{ partial "header.html" . }}
+
+      <main>
+        {{ block "main" . }}{{ end }}
+      </main>
+
+      {{ partial "footer.html" . }}
+    </body>
+</body>
+</html>

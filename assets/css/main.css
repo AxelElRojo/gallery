@@ -1,0 +1,571 @@
+:root {
+  /* A deep, rich blue-slate. Tweak this hex code to make it bluer or darker */
+  --bg-color: #0c111f; 
+  --card-bg: #0c111f;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  
+  /* --- New Sticky Footer Magic --- */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Forces the body to be at least the height of the screen */
+}
+
+/* Container to center everything and give it breathing room */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%; /* Ensures the container stays centered properly in flexbox */
+  box-sizing: border-box; /* Keeps padding from expanding the width */
+  
+  /* --- Pushes the footer down --- */
+  flex-grow: 1; 
+}
+
+/* Clean Typography */
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-muted);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #7dd3fc;
+}
+
+/* --- Homepage Roll Cards --- */
+.roll-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.roll-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.roll-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.roll-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.roll-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+/* --- The 3-Column Contact Sheet --- */
+.contact-sheet {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 15px;
+  grid-auto-flow: dense; 
+  margin-top: 2rem;
+}
+
+.photo-wrapper {
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--card-bg); /* This color acts as your matte/frame */
+  
+  /* The magic fix you suggested: */
+  aspect-ratio: 1 / 1; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  
+  /* 'contain' shows the whole rectangle inside the square without cropping */
+  object-fit: contain; 
+  display: block;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.photo-wrapper img:hover {
+  opacity: 0.85;
+}
+
+/* Featured images take up a 2x2 square */
+.photo-wrapper.is-featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.pswp-meta-bar {
+  position: absolute;
+  bottom: 30px; /* Distance from the bottom of the screen */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the block */
+  width: 90%;
+  max-width: 600px;
+  padding: 15px 20px;
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 8px;
+  color: #f8fafc;
+  text-align: center;
+  z-index: 100000; /* Forces it above the image and overlay */
+  
+  /* CRITICAL: Allows links inside the lightbox to be clicked */
+  pointer-events: auto; 
+}
+
+.pswp-meta-main {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.pswp-meta-comment {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+
+.pswp-meta-tags {
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.pswp-tag-link {
+  color: #38bdf8;
+  text-decoration: none;
+  margin: 0 6px;
+  transition: color 0.2s ease;
+}
+
+.pswp-tag-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+/* --- Header --- */
+.site-header {
+  /* Your existing border and padding */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem 0;
+
+  /* The Sticky Magic */
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Ensures it stays above your photo grid */
+
+  /* Glassmorphism effect: slightly transparent background with a blur */
+  /* Using your --card-bg hex (#0c111f) converted to rgba for 90% opacity */
+  background-color: rgba(12, 17, 31, 0.9); 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* For Safari support */
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+}
+
+.site-title:hover {
+  color: var(--accent);
+}
+
+.site-nav a {
+  margin-left: 1.5rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+/* --- Footer --- */
+.site-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.footer-container p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* --- Tag Cloud --- */
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--card-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px; /* Makes the edges perfectly round */
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.tag-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.tag-count {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.1rem 0.5rem;
+  border-radius: 9999px;
+}
+
+/* --- About Page --- */
+.about-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+
+/* Switches to a 2-column layout on larger screens */
+@media (min-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.about-image-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+  aspect-ratio: 3 / 4; /* Gives the profile picture a nice portrait crop */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-bio p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.about-link-btn {
+  display: inline-block;
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.about-link-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.logo {
+  /* This filter approximates a green color */
+    filter: invert(15%) sepia(0%) saturate(76%) hue-rotate(180deg) brightness(250%) contrast(9%); /* generated filter */
+}
+
+.icon-container{
+    display: flex; /* Enables flexbox layout for the container */
+  align-items: center; /* Vertically centers the items */
+  /* Optional: adds spacing between the icon and text */
+  gap: .1rem; 
+}
+
+/* --- Blog Feed --- */
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px; /* Keeps line lengths comfortable */
+}
+
+.blog-card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.blog-card h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.blog-card h2 a {
+  color: var(--text-main);
+}
+
+.blog-card h2 a:hover {
+  color: var(--accent);
+}
+
+.blog-card time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.blog-card p {
+  margin-bottom: 1rem;
+}
+
+.read-more {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* --- Single Blog Post --- */
+.blog-post {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blog-post-header h1 {
+  margin-bottom: 0.5rem;
+  font-size: 2.2rem;
+}
+
+.blog-post-header time {
+  color: var(--text-muted);
+}
+
+/* Styles specifically for markdown content inside the post */
+.blog-post-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-post-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+}
+
+/* Style inline code blocks and pre blocks if you post code snippets */
+.blog-post-content code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.blog-post-content pre {
+  background-color: #000;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.blog-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  color: var(--text-main);
+}
+
+/* --- Homepage Roll Cards --- */
+.gallery-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  
+  /* Default to stacked for mobile screens */
+  flex-direction: column; 
+  text-decoration: none;
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Switch to side-by-side on desktop/tablets */
+@media (min-width: 600px) {
+  .gallery-card {
+    flex-direction: row; 
+    align-items: stretch; /* Makes both sides equal height */
+    min-height: 180px; /* Prevents the card from getting too thin */
+  }
+}
+
+.gallery-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.gallery-card-content {
+  padding: 1.5rem;
+  flex: 1; /* Takes up all the remaining space */
+  order: 1; /* Forces the text to be the first item (left side) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the text vertically */
+}
+
+.gallery-card-image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  order: 2; /* Forces the image to be the second item (right side) */
+  overflow: hidden;
+}
+
+/* Adjust the image sizing for the side-by-side view */
+@media (min-width: 600px) {
+  .gallery-card-image {
+    width: 40%; /* The image takes up 40% of the card, text gets 60% */
+    aspect-ratio: auto; /* Removes the 3:2 lock so it stretches to match the card height */
+    border-bottom: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+.gallery-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover .gallery-card-image img {
+  transform: scale(1.05);
+}
+
+.gallery-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+}
+
+.gallery-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.about-link-btn {
+  /* Change this from inline-block to inline-flex for perfect icon alignment */
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Adds a nice, even space between the logo and the text */
+  
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.logo {
+  width: 1.25rem; /* Locks the width */
+  height: 1.25rem; /* Locks the height */
+  object-fit: contain; /* Ensures the icon doesn't stretch weirdly */
+  
+  /* Optional: If your SVG is black and you want it to match your white text */
+  /* filter: invert(1); */ 
+}
+

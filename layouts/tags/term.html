@@ -1,0 +1,67 @@
+{{ define "main" }}
+  <header style="margin-bottom: 2rem;">
+    <h1>Photos tagged with: #{{ .Title }}</h1>
+  </header>
+
+  <div class="contact-sheet" id="my-gallery">
+    {{ $currentTag := .Data.Term }}
+    
+    {{ range .Site.RegularPages }}
+      {{ range .Resources.ByType "image" }}
+        {{ if ne .Params.publish false }}
+          
+          {{ $tags := .Params.tags }}
+          {{ $comment := .Params.comment }}
+          {{ $orientation := .Params.orientation }}
+          {{ $rotate := .Params.rotate }}
+          {{ $featured := .Params.featured }}
+
+          {{ $hasTag := false }}
+          {{ range $tags }}
+            {{ if eq (urlize .) $currentTag }}
+              {{ $hasTag = true }}
+            {{ end }}
+          {{ end }}
+
+          {{ if $hasTag }}
+            {{ $img := . }}
+            {{ $img = $img.Filter (images.AutoOrient) }}
+            {{ if $rotate }}
+              {{ $img = $img.Filter (images.Rotate $rotate) }}
+            {{ end }}
+
+            {{ $pswpWidth := $img.Width }}
+            {{ $pswpHeight := $img.Height }}
+            {{ $wrapperClass := "photo-wrapper" }}
+            {{ $cropSize := "400x400" }}
+
+            {{ if eq $orientation "portrait" }}
+              {{ $wrapperClass = printf "%s is-portrait" $wrapperClass }}
+              {{ if $featured }}
+                {{ $cropSize = "800x1200" }}
+              {{ else }}
+                {{ $cropSize = "400x600" }}
+              {{ end }}
+            {{ else }}
+              {{ if $featured }}
+                {{ $cropSize = "800x800" }}
+              {{ end }}
+            {{ end }}
+
+            {{ $thumb := $img.Fit $cropSize }}
+
+            <a href="{{ $img.RelPermalink }}" 
+              data-pswp-width="{{ $pswpWidth }}" 
+              data-pswp-height="{{ $pswpHeight }}"
+              data-tags="{{ with $tags }}{{ delimit . ", " }}{{ end }}"
+              data-comment="{{ $comment }}" 
+              class="{{ $wrapperClass }}">
+              <img src="{{ $thumb.RelPermalink }}" alt="{{ $comment | default "Gallery image" }}" loading="lazy" />
+            </a>
+          {{ end }}
+
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}

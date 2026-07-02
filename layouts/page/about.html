@@ -1,0 +1,32 @@
+{{ define "main" }}
+<div class="about-container">
+  <div class="about-content">
+    <header style="margin-bottom: 1.5rem;">
+      <h1>{{ .Title }}</h1>
+    </header>
+    <div class="about-bio">
+      {{ .Content }}
+    </div>
+    <div class="about-links">
+      <a href="{{ .Params.ig }}" class="about-link-btn icon-container" target="_blank">
+        <img class="logo" width="7.5%" src="/images/ig.svg"/>Instagram
+      </a>
+    </div>
+  </div>
+  <div class="about-bio">
+    <!--<img src="/profile-placeholder.jpg" alt="Axel" class="about-image" loading="lazy">-->
+    <h1>My picture... or not</h1>
+    <p>
+      This section was supposed to contain a picture of me but I don't like the idea of having my picture online in a public setting.
+    </p>
+    <h3>Why is the site called Project ROJO?</h3>
+    <p>
+      It was the first name that came to mind and it sounded hilarious. I already had a domain but it uses my real name (I use it for my professional life) and I wanted another one to host personal stuff, at first it was only
+      for Aqours' concerts backups but then I made an app to stream those backups and now I am making a photo gallery. My nickname is Rojo, so I stylized it to ROJO.
+    </p>
+    <b>
+      If you want to help me improve my pictures feel free to reach out!
+    </b>
+  </div>
+</div>
+{{ end }}

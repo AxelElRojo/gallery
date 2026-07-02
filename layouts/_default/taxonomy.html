@@ -1,0 +1,25 @@
+{{ define "main" }}
+<h1>Photos tagged with: "{{ .Title }}"</h1>
+
+<div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+  {{ $currentTag := .Title }}
+  
+  {{/* 1. Loop through all gallery pages */}}
+  {{ range where .Site.RegularPages "Section" "gallery" }}
+    
+    {{/* 2. Loop through every image in those pages */}}
+    {{ range .Resources.ByType "image" }}
+      
+      {{/* 3. Check if the image params match the current tag */}}
+      {{ if or (in .Params.tags $currentTag) (eq .Params.lens $currentTag) (eq .Params.stock $currentTag) }}
+        <div class="photo-item">
+          <a href="{{ .RelPermalink }}">
+            <img src="{{ (.Fill "400x400").RelPermalink }}" alt="Tagged Image">
+          </a>
+        </div>
+      {{ end }}
+      
+    {{ end }}
+  {{ end }}
+</div>
+{{ end }}

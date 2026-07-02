@@ -1,0 +1,17 @@
+{{ define "main" }}
+  <header style="margin-bottom: 2rem;">
+    <h1>Blog</h1>
+    <p>Useless thoughts, retrospectives and updates.</p>
+  </header>
+
+  <div class="roll-list">
+    {{ range .Pages.ByDate.Reverse }}
+      <article class="blog-card">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <p>{{ .Summary }}</p>
+        <a href="{{ .RelPermalink }}" class="read-more">Read more &rarr;</a>
+      </article>
+    {{ end }}
+  </div>
+{{ end }}

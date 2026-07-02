@@ -1,0 +1,25 @@
+{{ define "main" }}
+  <header>
+    <h1>My Photography Portfolio</h1>
+    <p>A collection of my thoughts and pictures.</p>
+  </header>
+
+  <section class="roll-list">
+    {{ range where .Site.RegularPages "Section" "gallery" }}
+      <article class="roll-card" style="border: 1px solid #ccc; padding: 1rem;">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>Location: {{ .Params.location }} | Film: {{ .Params.stock }}</p>
+        <p><small>{{ .Date.Format "January 2, 2006" }}</small></p>
+      </article>
+    {{ end }}
+  </section>
+  <section class="roll-list">
+    {{ range where .Site.RegularPages "Section" "blog" }}
+      <article class="roll-card" style="border: 1px solid #ccc; padding: 1rem;">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        <p>Location: {{ .Params.location }} | Film: {{ .Params.stock }}</p>
+        <p><small>{{ .Date.Format "January 2, 2006" }}</small></p>
+      </article>
+    {{ end }}
+  </section>
+{{ end }}
