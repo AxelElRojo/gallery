@@ -1,0 +1,37 @@
+name: Deploy Hugo to Nginx
+
+# This tells GitHub to run this script every time you push to the 'main' branch
+on:
+  push:
+    branches:
+      - main  # Change this to 'master' if your default branch is called master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # Fetches your theme if you installed it via git submodule
+          fetch-depth: 0    # Fetches git history so Hugo knows when files were last updated
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo site
+        run: hugo --gc --minify
+
+      - name: Configure SSH securely
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SERVER_NAME }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete -e "ssh -p 69 -i ~/.ssh/deploy_key" public/ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/yourdomain.com/
