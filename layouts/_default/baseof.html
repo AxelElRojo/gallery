@@ -8,6 +8,10 @@
       <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
     {{ end }}
     <link rel="stylesheet" href="https://unpkg.com/photoswipe/dist/photoswipe.css">
+    {{ $syntax := resources.Get "css/syntax.css" | minify }}
+    {{ if $syntax }}
+        <link rel="stylesheet" href="{{ $syntax.RelPermalink }}">
+    {{ end }}
     {{ $script := resources.Get "js/main.js" | minify | fingerprint }}
     {{ if $script }}
       <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" type="module"></script>

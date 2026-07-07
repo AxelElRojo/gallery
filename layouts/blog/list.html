@@ -9,7 +9,7 @@
       <article class="blog-card">
         <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-        <p>{{ .Summary }}</p>
+        <p><p>{{ .Params.description | default .Summary }}</p></p>
         <a href="{{ .RelPermalink }}" class="read-more">Read more &rarr;</a>
       </article>
     {{ end }}

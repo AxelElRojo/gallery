@@ -1,0 +1,31 @@
+{{ $rollName := .Get "roll" }}
+{{ $fileName := .Get "src" }}
+{{ $caption := .Get "caption" }}
+
+{{ $bundle := site.GetPage $rollName }}
+
+{{ if $bundle }}
+  {{ $img := $bundle.Resources.GetMatch $fileName }}
+  
+  {{ if $img }}
+    {{ $img = $img.Filter (images.AutoOrient) }}
+
+    {{ $processed := $img.Resize "800x" }}
+
+    <figure class="blog-embed">
+      <img src="{{ $processed.RelPermalink }}" alt="{{ $caption | default "Embedded composition photo" }}" loading="lazy" />
+      {{ with $caption }}
+        <figcaption>{{ . }}</figcaption>
+      {{ end }}
+    </figure>
+
+  {{ else }}
+    <p style="color: red; border: 1px solid red; padding: 1rem;">
+      <strong>Hugo Error:</strong> Could not find image <code>{{ $fileName }}</code> inside roll <code>{{ $rollName }}</code>.
+    </p>
+  {{ end }}
+{{ else }}
+  <p style="color: red; border: 1px solid red; padding: 1rem;">
+    <strong>Hugo Error:</strong> Could not find the roll folder <code>{{ $rollName }}</code>.
+  </p>
+{{ end }}
