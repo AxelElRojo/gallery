@@ -72,7 +72,7 @@ resources:
   params:
     featured: false
     lens: "Nikkor 35mm f/2.8 AI"
-    tags: ['35mm', 'color', 'analogue', 'overexposed', '135']
+    tags: ['35mm', 'color', 'analogue', 'overexposed', '135', 'abandoned']
     publish: true
     orientation: "portrait"
 - src: "2.JPG"
