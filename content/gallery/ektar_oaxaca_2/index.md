@@ -5,26 +5,26 @@ location: "Oaxaca de Juárez"
 stock: "Kodak Ektar 100"
 camera: "Nikon F601"
 thumbnail: "03.JPG"
-tags: ['85mm', 'color', 'street', 'analogue', '135', 'archaeological site']
+tags: ['85mm', 'color', 'street', 'analogue', '135', 'archaeological']
 resources:
 - src: "01.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "02.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
     orientation: "portrait"
 - src: "03.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
     orientation: "portrait"
 - src: "04.JPG"
@@ -51,13 +51,13 @@ resources:
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "08.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "09.JPG"
   params:
@@ -120,44 +120,44 @@ resources:
   params:
     featured: true
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "19.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "20.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "21.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "22.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
 - src: "23.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', '135']
     publish: true
     orientation: "portrait"
 - src: "24.JPG"
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', 'plant', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', 'plant', '135']
     publish: true
 - src: "25.JPG"
   params:
@@ -196,7 +196,7 @@ resources:
   params:
     featured: false
     lens: "Nikkor 85mm f/1.8D"
-    tags: ['85mm', 'color', 'archaeological site', 'analogue', 'plant', '135']
+    tags: ['85mm', 'color', 'archaeological', 'analogue', 'plant', '135']
     publish: true
     orientation: "portrait"
 - src: "31.JPG"
