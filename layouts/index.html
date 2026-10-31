@@ -1,25 +1,110 @@
 {{ define "main" }}
-  <header>
-    <h1>My Photography Portfolio</h1>
-    <p>A collection of my thoughts and pictures.</p>
-  </header>
+<div class="portfolio-container">
+  
+  <!-- THE VIEWFINDER (Sticky Right/Top) -->
+  <div class="viewfinder">
+    <a href="" id="viewfinder-link" class="viewfinder-content">
+      <div class="viewfinder-text">
+        <h2 id="viewfinder-title">Loading...</h2>
+        <p id="viewfinder-desc"></p>
+      </div>
+      <img id="viewfinder-img" src="" alt="">
+    </a>
+  </div>
 
-  <section class="roll-list">
-    {{ range where .Site.RegularPages "Section" "gallery" }}
-      <article class="roll-card" style="border: 1px solid #ccc; padding: 1rem;">
-        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        <p>Location: {{ .Params.location }} | Film: {{ .Params.stock }}</p>
-        <p><small>{{ .Date.Format "January 2, 2006" }}</small></p>
-      </article>
+  <!-- THE STRIP (Scrollable Left/Bottom) -->
+  <div class="film-strip">
+    {{ range .Params.curated_photos }}
+      
+      <!-- Pointing to the correct 'gallery' folder -->
+      {{ $rollPage := site.GetPage (printf "/gallery/%s" .roll) }}
+      
+      {{ if $rollPage }}
+        {{ $img := $rollPage.Resources.GetMatch .src }}
+        
+        {{ if $img }}
+          {{ $img = $img.Filter (images.AutoOrient) }}
+          {{ $thumb := $img.Resize "600x" }}
+          {{ $hiRes := $img.Resize "1500x" }}
+          
+          <!-- Data attributes store the info for JavaScript to read -->
+          <div class="strip-item"
+               data-url="{{ $rollPage.RelPermalink }}"
+               data-title="{{ $rollPage.Title }}"
+               data-desc="{{ $rollPage.Params.location }} | {{ $rollPage.Params.stock }}"
+               data-hires="{{ $hiRes.RelPermalink }}">
+	    <img src="{{ $thumb.RelPermalink }}" alt="{{ $rollPage.Title }}">
+          </div>
+        {{ end }}
+      {{ end }}
+      
     {{ end }}
-  </section>
-  <section class="roll-list">
-    {{ range where .Site.RegularPages "Section" "blog" }}
-      <article class="roll-card" style="border: 1px solid #ccc; padding: 1rem;">
-        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        <p>Location: {{ .Params.location }} | Film: {{ .Params.stock }}</p>
-        <p><small>{{ .Date.Format "January 2, 2006" }}</small></p>
-      </article>
-    {{ end }}
-  </section>
+  </div>
+
+</div>
+
+<!-- THE JAVASCRIPT (Handles the scroll interaction) -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = Array.from(document.querySelectorAll('.strip-item'));
+    const vfImg = document.getElementById('viewfinder-img');
+    const vfTitle = document.getElementById('viewfinder-title');
+    const vfDesc = document.getElementById('viewfinder-desc');
+    const vfLink = document.getElementById('viewfinder-link');
+
+    if (items.length === 0) return;
+
+    function updateViewfinder(target) {
+      if (!target || target.classList.contains('is-active')) return;
+      
+      items.forEach(i => i.classList.remove('is-active'));
+      target.classList.add('is-active');
+      
+      const data = target.dataset;
+      vfImg.src = data.hires;
+      vfTitle.textContent = data.title;
+      vfDesc.textContent = data.desc;
+      vfLink.href = data.url;
+    }
+
+    function onScroll() {
+      const isMobile = window.innerWidth < 768;
+      const visibleTop = isMobile ? (window.innerHeight * 0.55) : 80; 
+      
+      // CRITICAL FIX: Default to the LAST item in the array instead of the first
+      let activeItem = items[items.length - 1]; 
+
+      for (let i = 0; i < items.length; i++) {
+        const rect = items[i].getBoundingClientRect();
+        
+        if (rect.bottom > visibleTop + 100) {
+          activeItem = items[i];
+          break; 
+        }
+      }
+
+      updateViewfinder(activeItem);
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const isMobile = window.innerWidth < 768;
+        const visibleTop = isMobile ? (window.innerHeight * 0.55) : 80; 
+        
+        // Calculate exactly where this image needs to be to trigger the scroll logic
+        const targetScroll = item.getBoundingClientRect().top + window.scrollY - visibleTop - 10;
+        
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    onScroll();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  });
+</script>
 {{ end }}
